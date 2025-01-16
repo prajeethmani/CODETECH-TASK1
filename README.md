@@ -1,9 +1,14 @@
 
 Name: PRAJEETH MANI S
+
 company: CODTECH IT SOLUTIONS
+
 ID: CT08FTV
+
 Domain: CYBER SECURITY AND ETHICAL HACKING
+
 Duration: JANUARY TO FEBRUARY 2025
+
 Mentor: Neela Santhosh
 
 
