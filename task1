@@ -1,0 +1,73 @@
+import re
+
+def check_password_strength(password):
+    # Initialize strength score and feedback
+    score = 0
+    feedback = []
+
+    # Check length
+    if len(password) >= 12:
+        score += 2
+        feedback.append("Great length (12+ characters).")
+    elif 8 <= len(password) < 12:
+        score += 1
+        feedback.append("Good length (8-11 characters). Consider using a longer password for extra security.")
+    else:
+        feedback.append("Password is too short. Use at least 8 characters.")
+
+    # Check for uppercase letters
+    if re.search(r'[A-Z]', password):
+        score += 1
+        feedback.append("Contains uppercase letters.")
+    else:
+        feedback.append("Add uppercase letters to make the password stronger.")
+
+    # Check for lowercase letters
+    if re.search(r'[a-z]', password):
+        score += 1
+        feedback.append("Contains lowercase letters.")
+    else:
+        feedback.append("Add lowercase letters to make the password stronger.")
+
+    # Check for numbers
+    if re.search(r'[0-9]', password):
+        score += 1
+        feedback.append("Contains numbers.")
+    else:
+        feedback.append("Add numbers to make the password stronger.")
+
+    # Check for special characters
+    if re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+        score += 1
+        feedback.append("Contains special characters.")
+    else:
+        feedback.append("Add special characters (e.g., !, @, #) to make the password stronger.")
+
+    # Check for repeated or sequential characters
+    if re.search(r'(.)\1{2,}', password):
+        feedback.append("Avoid using repeated characters in sequence (e.g., 'aaa').")
+    if re.search(r'(012|123|234|345|456|567|678|789|890|abc|bcd|cde)', password, re.IGNORECASE):
+        feedback.append("Avoid using sequential patterns like '123' or 'abc'.")
+
+    # Final evaluation
+    strength_level = "Weak"
+    if score >= 6:
+        strength_level = "Strong"
+    elif score >= 4:
+        strength_level = "Moderate"
+
+    return {
+        "strength_level": strength_level,
+        "score": score,
+        "feedback": feedback
+    }
+
+# Example usage
+if __name__ == "__main__":
+    user_password = input("Enter a password to check its strength: ")
+    result = check_password_strength(user_password)
+
+    print(f"\nPassword Strength: {result['strength_level']} ({result['score']}/6)")
+    print("Feedback:")
+    for note in result['feedback']:
+        print(f"- {note}")
